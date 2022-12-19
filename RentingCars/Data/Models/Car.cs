@@ -9,15 +9,15 @@ namespace RentingCars.Data.Models
         public int Id { get; set; }
         
         [Required]
-        [MaxLength(CarBrandMaxlength)]
+        [MaxLength(CarBrandMaxLength)]
         public string Brand { get; set; }
 
         [Required]
-        [MaxLength(CarModelMaxlength)]
+        [MaxLength(CarModelMaxLength)]
         public string Model { get; set; }
 
         [Required]
-        [MaxLength(CarDescriptionlMaxlength)]
+        [MaxLength(CarDescriptionMaxLength)]
         public string Description { get; set; }
 
         [Required]
