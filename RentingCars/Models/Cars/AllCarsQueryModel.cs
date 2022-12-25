@@ -1,10 +1,13 @@
-﻿namespace RentingCars.Models.Cars
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RentingCars.Models.Cars
 {
     public class AllCarsQueryModel
     {
         public IEnumerable<string> Brands { get; set; }
 
-        public IEnumerable<string> SearchTetrm { get; set; }
+        [Display(Name = "Search")]
+        public string SearchTetrm { get; set; }
 
         public CarSorting Sorting { get; set; }
 

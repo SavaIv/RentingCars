@@ -53,8 +53,15 @@ namespace RentingCars.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All()
+        public IActionResult All(string searchTerm)
         {
+            var carsQuery = data.Cars.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                carsQuery = carsQuery.Where(c => c.Brand.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+            }
+
             var cars = data
                 .Cars
                 .OrderByDescending(c => c.Id)
@@ -71,7 +78,8 @@ namespace RentingCars.Controllers
 
             return View(new AllCarsQueryModel
             {
-                Cars = cars
+                Cars = cars,
+                SearchTetrm = searchTerm
             });
         }
 
