@@ -6,8 +6,8 @@ namespace RentingCars.Models.Cars
     {
         public IEnumerable<string> Brands { get; set; }
 
-        [Display(Name = "Search")]
-        public string SearchTetrm { get; set; }
+        [Display(Name = "Search by text")]
+        public string SearchTerm { get; set; }
 
         public CarSorting Sorting { get; set; }
 

@@ -59,11 +59,13 @@ namespace RentingCars.Controllers
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                carsQuery = carsQuery.Where(c => c.Brand.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+                carsQuery = carsQuery.Where(c =>
+                    c.Brand.ToLower().Contains(searchTerm.ToLower()) ||
+                    c.Model.ToLower().Contains(searchTerm.ToLower()) ||
+                    c.Description.ToLower().Contains(searchTerm.ToLower()));
             }
 
-            var cars = data
-                .Cars
+            var cars = carsQuery
                 .OrderByDescending(c => c.Id)
                 .Select(c => new CarListingViewModel
                 {
@@ -79,7 +81,7 @@ namespace RentingCars.Controllers
             return View(new AllCarsQueryModel
             {
                 Cars = cars,
-                SearchTetrm = searchTerm
+                SearchTerm = searchTerm
             });
         }
 
