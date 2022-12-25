@@ -4,18 +4,22 @@
     <form method="get">
         <div class="row">
             <div class="col-md-4">
-                <div class="mb-3">
-                    <label asp-for="SearchTerm"></label>
-                    <input asp-for="SearchTerm" class="form-control">
-                </div>
+                <label asp-for="Brand"></label>
+                <select asp-for="Brand" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var brand in Model.Brands)
+                    {
+                        <option value=@brand>@brand</option>
+                    }
+                </select>
             </div>
-
+            
             <div class="col-md-4">
                 <div class="mb-3">
                     <label asp-for="SearchTerm"></label>
                     <input asp-for="SearchTerm" class="form-control">
                 </div>
-            </div>
+            </div>            
 
             <div class="col-md-4">
                 <div class="mb-3">
