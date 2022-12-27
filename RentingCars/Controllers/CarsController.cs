@@ -53,7 +53,10 @@ namespace RentingCars.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(string brand, string searchTerm)
+        public IActionResult All(
+            string brand, 
+            string searchTerm,
+            CarSorting sorting)
         {
             var carsQuery = data.Cars.AsQueryable();
 
@@ -70,8 +73,15 @@ namespace RentingCars.Controllers
                     c.Description.ToLower().Contains(searchTerm.ToLower()));
             }
 
-            var cars = carsQuery
-                .OrderByDescending(c => c.Id)
+            carsQuery = sorting switch
+            {
+                CarSorting.DateCreated => carsQuery.OrderByDescending(c => c.Id),
+                CarSorting.Year => carsQuery.OrderByDescending(c => c.Year),
+                CarSorting.BrandAndModel => carsQuery.OrderBy(c => c.Brand).ThenBy(c => c.Model),
+                _ => carsQuery.OrderByDescending(c => c.Id)
+            };
+
+            var cars = carsQuery                
                 .Select(c => new CarListingViewModel
                 {
                     Id = c.Id,
@@ -92,9 +102,11 @@ namespace RentingCars.Controllers
 
             return View(new AllCarsQueryModel
             {
+                Brand = brand,
                 Brands = carBrands,
-                Cars = cars,
-                SearchTerm = searchTerm
+                SearchTerm = searchTerm,
+                Sorting = sorting,
+                Cars = cars
             });
         }
 
