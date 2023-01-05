@@ -12,7 +12,7 @@ using RentingCars.Data;
 namespace RentingCars.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230105175218_initialMigrationWithCarsDealersAnccategories")]
+    [Migration("20230105192824_initialMigrationWithCarsDealersAnccategories")]
     partial class initialMigrationWithCarsDealersAnccategories
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -316,7 +316,7 @@ namespace RentingCars.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Deals");
+                    b.ToTable("Dealers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

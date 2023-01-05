@@ -16,7 +16,7 @@ namespace RentingCars.Data
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Dealer> Deals { get; set; }
+        public DbSet<Dealer> Dealers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

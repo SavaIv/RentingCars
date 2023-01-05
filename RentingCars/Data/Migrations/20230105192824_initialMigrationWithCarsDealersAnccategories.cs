@@ -22,7 +22,7 @@ namespace RentingCars.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Deals",
+                name: "Dealers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -33,9 +33,9 @@ namespace RentingCars.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Deals", x => x.Id);
+                    table.PrimaryKey("PK_Dealers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Deals_AspNetUsers_UserId",
+                        name: "FK_Dealers_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -66,9 +66,9 @@ namespace RentingCars.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Cars_Deals_DealerId",
+                        name: "FK_Cars_Dealers_DealerId",
                         column: x => x.DealerId,
-                        principalTable: "Deals",
+                        principalTable: "Dealers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -84,8 +84,8 @@ namespace RentingCars.Data.Migrations
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Deals_UserId",
-                table: "Deals",
+                name: "IX_Dealers_UserId",
+                table: "Dealers",
                 column: "UserId",
                 unique: true);
         }
@@ -99,7 +99,7 @@ namespace RentingCars.Data.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Deals");
+                name: "Dealers");
         }
     }
 }

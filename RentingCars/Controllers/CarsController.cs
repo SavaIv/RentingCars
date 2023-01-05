@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentingCars.Data;
 using RentingCars.Data.Models;
 using RentingCars.Models.Cars;
+
+using static RentingCars.Infrastructure.ClaimsPrincipalExtensions;
 
 namespace RentingCars.Controllers
 {
@@ -14,8 +17,16 @@ namespace RentingCars.Controllers
             data = _data;
         }
 
+        [Authorize]
         public IActionResult Add()
         {
+
+
+            if (!UserIsDealer())
+            {
+                return RedirectToAction(nameof(DealersController.Create), "Dealers");
+            }
+
             return View(new AddCarFormModel
             {
                 Categories = GetCarCategories()
@@ -23,6 +34,7 @@ namespace RentingCars.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddCarFormModel car)
         {
             if(!data.Categories.Any(c => c.Id == car.CategoryId))
@@ -118,6 +130,13 @@ namespace RentingCars.Controllers
                         Name = c.Name
                     })
                     .ToList();
+        }
+
+        private bool UserIsDealer()
+        {
+            return data
+                    .Dealers
+                    .Any(d => d.UserId == this.User.GetId());
         }
     }
 }
