@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 
-using static RentingCars.Data.DataConstants;
+using static RentingCars.Data.DataConstants.Car;
 
 namespace RentingCars.Models.Cars
 {

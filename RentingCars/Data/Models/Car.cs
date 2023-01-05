@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using static RentingCars.Data.DataConstants;
+using static RentingCars.Data.DataConstants.Car;
 
 namespace RentingCars.Data.Models
 {
@@ -29,5 +29,9 @@ namespace RentingCars.Data.Models
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
+
+        public int DealerId { get; set; }
+
+        public Dealer Dealer { get; set; }
     }
 }
