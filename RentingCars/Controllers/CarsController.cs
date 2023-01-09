@@ -20,11 +20,9 @@ namespace RentingCars.Controllers
         [Authorize]
         public IActionResult Add()
         {
-
-
             if (!UserIsDealer())
             {
-                return RedirectToAction(nameof(DealersController.Create), "Dealers");
+                return RedirectToAction(nameof(DealersController.Become), "Dealers");
             }
 
             return View(new AddCarFormModel
@@ -37,7 +35,18 @@ namespace RentingCars.Controllers
         [Authorize]
         public IActionResult Add(AddCarFormModel car)
         {
-            if(!data.Categories.Any(c => c.Id == car.CategoryId))
+            var dealerId = data
+                .Dealers
+                .Where(d => d.UserId == User.GetId())
+                .Select(d => d.Id)
+                .FirstOrDefault();
+
+            if (dealerId == 0)
+            {
+                return RedirectToAction(nameof(DealersController.Become), "Dealers");
+            }
+
+            if (!data.Categories.Any(c => c.Id == car.CategoryId))
             {
                 ModelState.AddModelError(nameof(car.CategoryId), "Category dose not exist!");
             }
@@ -56,7 +65,8 @@ namespace RentingCars.Controllers
                 Description = car.Description,
                 ImageUrl = car.ImageUrl,
                 CategoryId = car.CategoryId,
-                Year = car.Year
+                Year = car.Year,
+                DealerId = dealerId
             };
 
             data.Cars.Add(theCar);
