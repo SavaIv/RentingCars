@@ -81,21 +81,37 @@
     }
 </div>
 
-<div class="container mt-3 p-4 bg-primary text-white rounded">   
-    <div class="row">
+<div class="row">
+    <div class="col-12 text-center mt-3">
+        <button class="btn btn-primary" id="statistics-button">
+            Show statistics
+        </button>
+    </div>
 
-        <div class="col-md-4 text-center">
-            @Model.TotalCars Total Cars
-        </div>
-        <div class="col-md-4 text-center">
-            @Model.TotalUsers Total Users
-        </div>
-        <div class="col-md-4 text-center">
-            @Model.TotalRents Total Rents
-        </div>
-    
+</div>
+
+<div class="container mt-3 p-4 bg-primary text-white rounded d-none" id="statistics">
+    <div class="row">
+        <div class="col-md-4 text-center" id="total-cars"></div>
+        <div class="col-md-4 text-center" id="total-users"></div>
+        <div class="col-md-4 text-center" id="total-rents"></div>
     </div>
 </div>
+
+@section Scripts{
+<script>
+    $('#statistics-button').on('click', ev => {
+        $.get('/api/statistics', (data) => {
+            $('#total-cars').text(data.totalCars + " Cars");
+            $('#total-users').text(data.totalUsers + " Users");
+            $('#total-rents').text(data.totalRents + " Rents");
+
+            $('#statistics').removeClass('d-none');
+            $('#statistics-button').hide();
+        })
+    })
+</script>
+}
 
 
 
