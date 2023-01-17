@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentingCars.Data;
 using RentingCars.Data.Models;
+using RentingCars.Models;
 using RentingCars.Models.Cars;
 
 using static RentingCars.Infrastructure.ClaimsPrincipalExtensions;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentingCars.Data;
+using RentingCars.Models;
 //using RentingCars.Models.Cars;
 using RentingCars.Models.Api.Cars;
 using RentingCars.Models.Cars;
@@ -61,16 +62,10 @@ namespace RentingCars.Controllers.Api
                 })
                 .ToList();
 
-            var carBrands = data
-                .Cars
-                .Select(c => c.Brand)
-                .OrderBy(br => br)
-                .Distinct()
-                .ToList();
-
             return new AllCarsApiResponseModel
             {
                 TotalCars = totalCars,
+                CarsPerPage = query.CarsPerPage,
                 CurrentPage = query.CurrentPage,
                 Cars = cars
             };
