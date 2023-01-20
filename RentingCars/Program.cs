@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RentingCars.Data;
 using RentingCars.Infrastructure;
+using RentingCars.Services.Statistics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
 var app = builder.Build();
 

@@ -3,24 +3,24 @@ using RentingCars.Data;
 using RentingCars.Models;
 using RentingCars.Models.Cars;
 using RentingCars.Models.Home;
+using RentingCars.Services.Statistics;
 using System.Diagnostics;
 
 namespace RentingCars.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IStatisticsService statistics;
         private readonly ApplicationDbContext data;
 
-        public HomeController(ApplicationDbContext _data)
+        public HomeController(IStatisticsService _statistics, ApplicationDbContext _data)
         {
+            statistics = _statistics;
             data = _data;
         }
 
         public IActionResult Index()
         {
-            var totalCars = data.Cars.Count();
-            var totalUsers = data.Users.Count();
-
             var cars = data
                 .Cars
                 .OrderByDescending(c => c.Id)
@@ -35,10 +35,12 @@ namespace RentingCars.Controllers
                 .Take(3)
                 .ToList();
 
+            var totalStatistics = statistics.Total();
+
             return View(new IndexViewModel
             {
-                TotalCars = totalCars,
-                TotalUsers = totalUsers,
+                TotalCars = totalStatistics.TotalCars,
+                TotalUsers = totalStatistics.TotalUsers,
                 Cars = cars
             });
         }

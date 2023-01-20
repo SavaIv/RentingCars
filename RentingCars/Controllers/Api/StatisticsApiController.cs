@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentingCars.Data;
 using RentingCars.Models.Api.Statistics;
+using RentingCars.Services.Statistics;
 
 namespace RentingCars.Controllers.Api
 {
@@ -8,27 +9,17 @@ namespace RentingCars.Controllers.Api
     [Route("api/statistics")]
     public class StatisticsApiController : ControllerBase
     {
-        public static ApplicationDbContext data;
+        public static IStatisticsService statistics;
 
-        public StatisticsApiController(ApplicationDbContext _data)
+        public StatisticsApiController(IStatisticsService _statistics)
         {
-            data = _data;
+            statistics = _statistics;
         }
 
         [HttpGet]
-        public StatisticsResponseModel GetStatistics()
-        {
-            var totalCars = data.Cars.Count();
-            var totalUsers = data.Users.Count();
-
-            var statistics = new StatisticsResponseModel
-            {
-                TotalCars = totalCars,
-                TotalUsers = totalUsers,
-                TotalRents = 0
-            };
-
-            return statistics;
+        public StatisticsServiceModel GetStatistics()
+        {           
+            return statistics.Total();
         }
 
 
