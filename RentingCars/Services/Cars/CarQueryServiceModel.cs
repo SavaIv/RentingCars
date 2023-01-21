@@ -1,6 +1,6 @@
-﻿namespace RentingCars.Models.Api.Cars
+﻿namespace RentingCars.Services.Cars
 {
-    public class AllCarsApiResponseModel
+    public class CarQueryServiceModel
     {
         public int CurrentPage { get; set; }
 
@@ -8,6 +8,6 @@
 
         public int TotalCars { get; set; }
 
-        public IEnumerable<CarResponceModel> Cars { get; set; }
+        public IEnumerable<CarServiceModel> Cars { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RentingCars.Services.Cars;
+using System.ComponentModel.DataAnnotations;
 
 namespace RentingCars.Models.Cars
 {
@@ -19,6 +20,6 @@ namespace RentingCars.Models.Cars
 
         public CarSorting Sorting { get; set; }
 
-        public IEnumerable<CarListingViewModel> Cars { get; set; }
+        public IEnumerable<CarServiceModel> Cars { get; set; }
     }
 }
