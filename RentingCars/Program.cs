@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentingCars.Data;
 using RentingCars.Infrastructure;
 using RentingCars.Services.Cars;
+using RentingCars.Services.Dealers;
 using RentingCars.Services.Statistics;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +28,13 @@ builder.Services
     })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(config => 
+    config.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())
+    );
 
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<ICarService, CarService>();
+builder.Services.AddTransient<IDealerService, DealerService>();
 
 var app = builder.Build();
 

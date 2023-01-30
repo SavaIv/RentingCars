@@ -1,5 +1,7 @@
 ﻿using RentingCars.Data;
+using RentingCars.Data.Models;
 using RentingCars.Models;
+//using static RentingCars.Data.DataConstants;
 
 namespace RentingCars.Services.Cars
 {
@@ -44,19 +46,9 @@ namespace RentingCars.Services.Cars
 
             var totalCars = carsQuery.Count();
 
-            var cars = carsQuery
+            var cars = GetCars(carsQuery
                 .Skip((currentPage - 1) * carsPerPage)
-                .Take(carsPerPage)
-                .Select(c => new CarServiceModel
-                {
-                    Id = c.Id,
-                    Brand = c.Brand,
-                    Model = c.Model,
-                    Year = c.Year,
-                    ImageUrl = c.ImageUrl,
-                    Category = c.Category.Name
-                })
-                .ToList();
+                .Take(carsPerPage));
 
             return new CarQueryServiceModel
             {
@@ -67,6 +59,13 @@ namespace RentingCars.Services.Cars
             };
         }
 
+        public IEnumerable<CarServiceModel> ByUser(string userId)
+        {
+            return GetCars(data
+                .Cars
+                .Where(c => c.Dealer.UserId == userId));
+        }
+
         public IEnumerable<string> AllCarBrands()
         {
             return data
@@ -75,6 +74,21 @@ namespace RentingCars.Services.Cars
                 .OrderBy(br => br)
                 .Distinct()
                 .ToList();
+        }
+
+        private static IEnumerable<CarServiceModel> GetCars(IQueryable<Car> carQuery)
+        {
+            return carQuery
+                    .Select(c => new CarServiceModel
+                    {
+                        Id = c.Id,
+                        Brand = c.Brand,
+                        Model = c.Model,
+                        Year = c.Year,
+                        ImageUrl = c.ImageUrl,
+                        Category = c.Category.Name
+                    })
+                    .ToList();
         }
     }
 }
