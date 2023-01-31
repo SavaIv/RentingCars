@@ -21,6 +21,14 @@ namespace RentingCars.Controllers
         }
 
         [Authorize]
+        public IActionResult Mine()
+        {
+            var myCars = cars.ByUser(User.GetId());
+
+            return View(myCars);
+        }
+
+        [Authorize]
         public IActionResult Add()
         {
             if (!UserIsDealer())

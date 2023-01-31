@@ -11,7 +11,7 @@ namespace RentingCars.Services.Cars
             int currentPage,
             int carsPerPage);
 
-        IEnumerable<CarServiceModel> ByUser(string iserId);
+        IEnumerable<CarServiceModel> ByUser(string userId);
 
         IEnumerable<string> AllCarBrands();
     }
