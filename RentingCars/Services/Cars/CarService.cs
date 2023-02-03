@@ -59,6 +59,52 @@ namespace RentingCars.Services.Cars
             };
         }
 
+        public CarDetailsServiceModel Details(int id)
+        {
+            return data
+                    .Cars
+                    .Where(c => c.Id == id)
+                    .Select(c => new CarDetailsServiceModel
+                    {
+                        Id = c.Id,
+                        Brand = c.Brand,
+                        Model = c.Model,
+                        Description = c.Description,
+                        Year = c.Year,
+                        ImageUrl = c.ImageUrl,
+                        Category = c.Category.Name,
+                        DealerId = c.DealerId,
+                        DealerName = c.Dealer.Name,
+                        UserId = c.Dealer.UserId
+                    })
+                    .FirstOrDefault();
+        }
+
+        public int Create(string brand, 
+                            string model, 
+                            string description, 
+                            string imageUrl, 
+                            int categoryId, 
+                            int year, 
+                            int dealerId)
+        {
+            var theCar = new Car
+            {
+                Brand = brand,
+                Model = model,
+                Description = description,
+                ImageUrl = imageUrl,
+                CategoryId = categoryId,
+                Year = year,
+                DealerId = dealerId
+            };
+
+            data.Cars.Add(theCar);
+            data.SaveChanges();
+
+            return theCar.Id;
+        }
+
         public IEnumerable<CarServiceModel> ByUser(string userId)
         {
             return GetCars(data
@@ -66,7 +112,7 @@ namespace RentingCars.Services.Cars
                 .Where(c => c.Dealer.UserId == userId));
         }
 
-        public IEnumerable<string> AllCarBrands()
+        public IEnumerable<string> AllBrands()
         {
             return data
                 .Cars
@@ -74,6 +120,25 @@ namespace RentingCars.Services.Cars
                 .OrderBy(br => br)
                 .Distinct()
                 .ToList();
+        }
+
+        public IEnumerable<CarCategoryServiceModel> AllCategories()
+        {
+            return data
+                    .Categories
+                    .Select(c => new CarCategoryServiceModel
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    })
+                    .ToList();
+        }
+
+        public bool CategoryExists(int categoryId)
+        {
+            return data
+                .Categories
+                .Any(c => c.Id == categoryId);
         }
 
         private static IEnumerable<CarServiceModel> GetCars(IQueryable<Car> carQuery)

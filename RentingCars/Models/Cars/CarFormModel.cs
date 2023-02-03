@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using RentingCars.Services.Cars;
 using System.ComponentModel.DataAnnotations;
 
 using static RentingCars.Data.DataConstants.Car;
 
 namespace RentingCars.Models.Cars
 {
-    public class AddCarFormModel
+    public class CarFormModel
     {
         [Required]        
         [StringLength(
@@ -41,6 +42,6 @@ namespace RentingCars.Models.Cars
         public int CategoryId { get; set; }
 
         [BindNever]
-        public IEnumerable<CarCategoryViewModel> ? Categories { get; set; }
+        public IEnumerable<CarCategoryServiceModel> ? Categories { get; set; }
     }
 }

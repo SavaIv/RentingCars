@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<CarServiceModel>
 
 @{
-    ViewData["Title"] = "My Cars";
+    ViewBag.Title = "My Cars";
+    ViewBag.AllowCarEdit = true;
 }
 
 @if (!Model.Any())

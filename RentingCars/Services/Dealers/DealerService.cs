@@ -11,6 +11,15 @@ namespace RentingCars.Services.Dealers
             data = _data;
         }
 
+        public int GetIdbyUser(string userId)
+        {
+            return data
+                .Dealers
+                .Where(d => d.UserId == userId)
+                .Select(d => d.Id)
+                .FirstOrDefault();
+        }
+
         public bool IsDealer(string userId)
         {
             return data
