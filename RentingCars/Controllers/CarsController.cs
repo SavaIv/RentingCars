@@ -39,11 +39,9 @@ namespace RentingCars.Controllers
                 return RedirectToAction(nameof(DealersController.Become), "Dealers");
             }
 
-            var categories = cars.AllCategories();
-
             return View(new CarFormModel
             {
-                Categories = categories
+                Categories = cars.AllCategories()
             });
         }
 
@@ -98,11 +96,75 @@ namespace RentingCars.Controllers
 
             return View(query);
         }
-        
-        //[Authorize]
-        //public IActionResult Edit(int id)
-        //{
 
-        //}
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = User.GetId();
+
+            if (!dealers.IsDealer(userId))
+            {
+                return RedirectToAction(nameof(DealersController.Become), "Dealers");
+            }
+
+            var car = cars.Details(id);
+
+            if(car.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(new CarFormModel
+            {
+                Brand = car.Brand,
+                Model = car.Model,
+                Description = car.Description,
+                ImageUrl = car.ImageUrl,
+                Year = car.Year,
+                CategoryId = car.CategoryId,
+                Categories = cars.AllCategories()
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(int id, CarFormModel car)
+        {
+            var dealerId = dealers.GetIdbyUser(User.GetId());
+
+            if (dealerId == 0)
+            {
+                return RedirectToAction(nameof(DealersController.Become), "Dealers");
+            }
+
+            if (!cars.CategoryExists(car.CategoryId))
+            {
+                ModelState.AddModelError(nameof(car.CategoryId), "Category dose not exist!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                car.Categories = cars.AllCategories();
+
+                return View(car);
+            }
+
+            var carIsEdited = cars.Edit(
+                id,
+                car.Brand,
+                car.Model,
+                car.Description,
+                car.ImageUrl,
+                car.CategoryId,
+                car.Year,
+                dealerId);
+
+            if (!carIsEdited)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }

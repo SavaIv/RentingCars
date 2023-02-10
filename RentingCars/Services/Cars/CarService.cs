@@ -72,7 +72,7 @@ namespace RentingCars.Services.Cars
                         Description = c.Description,
                         Year = c.Year,
                         ImageUrl = c.ImageUrl,
-                        Category = c.Category.Name,
+                        CategoryName = c.Category.Name,
                         DealerId = c.DealerId,
                         DealerName = c.Dealer.Name,
                         UserId = c.Dealer.UserId
@@ -80,12 +80,12 @@ namespace RentingCars.Services.Cars
                     .FirstOrDefault();
         }
 
-        public int Create(string brand, 
-                            string model, 
-                            string description, 
-                            string imageUrl, 
-                            int categoryId, 
-                            int year, 
+        public int Create(string brand,
+                            string model,
+                            string description,
+                            string imageUrl,
+                            int categoryId,
+                            int year,
                             int dealerId)
         {
             var theCar = new Car
@@ -103,6 +103,36 @@ namespace RentingCars.Services.Cars
             data.SaveChanges();
 
             return theCar.Id;
+        }
+
+        public bool Edit(
+            int id,
+            string brand,
+            string model,
+            string description,
+            string imageUrl,
+            int categoryId,
+            int year,
+            int dealerId)
+        {
+            var carData = data.Cars.Find(id);
+
+            if (carData.DealerId != dealerId)
+            {
+                return false;
+            }
+
+            carData.Brand = brand;
+            carData.Model = model;
+            carData.Description = description;
+            carData.ImageUrl = imageUrl;
+            carData.CategoryId = categoryId;
+            carData.Year = year;
+            carData.DealerId = dealerId;
+
+            data.SaveChanges();
+
+            return true;
         }
 
         public IEnumerable<CarServiceModel> ByUser(string userId)
@@ -151,7 +181,7 @@ namespace RentingCars.Services.Cars
                         Model = c.Model,
                         Year = c.Year,
                         ImageUrl = c.ImageUrl,
-                        Category = c.Category.Name
+                        CategoryName = c.Category.Name
                     })
                     .ToList();
         }

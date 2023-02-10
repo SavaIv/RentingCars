@@ -13,13 +13,24 @@ namespace RentingCars.Services.Cars
 
         CarDetailsServiceModel Details(int id);
 
-        int Create(string brand, 
-                    string model, 
-                    string description, 
-                    string imageUrl, 
-                    int categoryId, 
-                    int year, 
-                    int dealerId);
+        int Create(
+            string brand, 
+            string model, 
+            string description, 
+            string imageUrl, 
+            int categoryId, 
+            int year, 
+            int dealerId);
+
+        bool Edit(
+            int id,
+            string brand,
+            string model,
+            string description,
+            string imageUrl,
+            int categoryId,
+            int year,
+            int dealerId);
 
         IEnumerable<CarServiceModel> ByUser(string userId);
 
