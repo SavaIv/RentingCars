@@ -4,6 +4,6 @@
     {
         public bool IsDealer(string userId);
 
-        public int GetIdbyUser(string userId);
+        public int IdbyUser(string userId);
     }
 }

@@ -11,7 +11,7 @@ namespace RentingCars.Services.Dealers
             data = _data;
         }
 
-        public int GetIdbyUser(string userId)
+        public int IdbyUser(string userId)
         {
             return data
                 .Dealers

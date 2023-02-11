@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RentingCars.Data;
-using RentingCars.Data.Models;
-using RentingCars.Models;
 using RentingCars.Models.Cars;
 using RentingCars.Services.Cars;
 using RentingCars.Services.Dealers;
@@ -14,19 +11,17 @@ namespace RentingCars.Controllers
     {
         private readonly ICarService cars;
         private readonly IDealerService dealers;
-        private readonly ApplicationDbContext data;
 
-        public CarsController(ICarService _cars, ApplicationDbContext _data, IDealerService _dealers)
+        public CarsController(ICarService _cars, IDealerService _dealers)
         {
             cars = _cars;
-            data = _data;
             dealers = _dealers;
         }
 
         [Authorize]
         public IActionResult Mine()
         {
-            var myCars = cars.ByUser(User.GetId());
+            var myCars = cars.ByUser(User.Id());
 
             return View(myCars);
         }
@@ -34,7 +29,7 @@ namespace RentingCars.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            if (!dealers.IsDealer(User.GetId()))
+            if (!dealers.IsDealer(User.Id()))
             {
                 return RedirectToAction(nameof(DealersController.Become), "Dealers");
             }
@@ -49,7 +44,7 @@ namespace RentingCars.Controllers
         [Authorize]
         public IActionResult Add(CarFormModel car)
         {
-            var dealerId = dealers.GetIdbyUser(User.GetId());
+            var dealerId = dealers.IdbyUser(User.Id());
 
             if (dealerId == 0)
             {
@@ -100,7 +95,7 @@ namespace RentingCars.Controllers
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var userId = User.GetId();
+            var userId = User.Id();
 
             if (!dealers.IsDealer(userId))
             {
@@ -130,7 +125,7 @@ namespace RentingCars.Controllers
         [HttpPost]
         public IActionResult Edit(int id, CarFormModel car)
         {
-            var dealerId = dealers.GetIdbyUser(User.GetId());
+            var dealerId = dealers.IdbyUser(User.Id());
 
             if (dealerId == 0)
             {
