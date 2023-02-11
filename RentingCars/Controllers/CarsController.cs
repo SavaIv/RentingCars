@@ -109,7 +109,7 @@ namespace RentingCars.Controllers
 
             var car = cars.Details(id);
 
-            if(car.UserId != userId)
+            if (car.UserId != userId)
             {
                 return Unauthorized();
             }
@@ -149,20 +149,19 @@ namespace RentingCars.Controllers
                 return View(car);
             }
 
-            var carIsEdited = cars.Edit(
+            if (!cars.IsByDealer(id, dealerId))
+            {
+                return BadRequest();
+            }
+
+            cars.Edit(
                 id,
                 car.Brand,
                 car.Model,
                 car.Description,
                 car.ImageUrl,
                 car.CategoryId,
-                car.Year,
-                dealerId);
-
-            if (!carIsEdited)
-            {
-                return BadRequest();
-            }
+                car.Year);
 
             return RedirectToAction(nameof(All));
         }

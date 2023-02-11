@@ -11,7 +11,7 @@ namespace RentingCars.Services.Cars
             int currentPage,
             int carsPerPage);
 
-        CarDetailsServiceModel Details(int id);
+        CarDetailsServiceModel Details(int carId);
 
         int Create(
             string brand, 
@@ -23,16 +23,17 @@ namespace RentingCars.Services.Cars
             int dealerId);
 
         bool Edit(
-            int id,
+            int carId,
             string brand,
             string model,
             string description,
             string imageUrl,
             int categoryId,
-            int year,
-            int dealerId);
+            int year);
 
         IEnumerable<CarServiceModel> ByUser(string userId);
+
+        bool IsByDealer(int carId, int dealerId);
 
         IEnumerable<string> AllBrands();
 

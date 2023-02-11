@@ -112,12 +112,11 @@ namespace RentingCars.Services.Cars
             string description,
             string imageUrl,
             int categoryId,
-            int year,
-            int dealerId)
+            int year)
         {
             var carData = data.Cars.Find(id);
-
-            if (carData.DealerId != dealerId)
+                        
+            if(carData == null)
             {
                 return false;
             }
@@ -127,8 +126,7 @@ namespace RentingCars.Services.Cars
             carData.Description = description;
             carData.ImageUrl = imageUrl;
             carData.CategoryId = categoryId;
-            carData.Year = year;
-            carData.DealerId = dealerId;
+            carData.Year = year;            
 
             data.SaveChanges();
 
@@ -140,6 +138,13 @@ namespace RentingCars.Services.Cars
             return GetCars(data
                 .Cars
                 .Where(c => c.Dealer.UserId == userId));
+        }
+
+        public bool IsByDealer(int carId, int dealerId)
+        {
+            return data
+                .Cars
+                .Any(c => c.Id == carId && c.DealerId == dealerId);
         }
 
         public IEnumerable<string> AllBrands()
@@ -184,6 +189,6 @@ namespace RentingCars.Services.Cars
                         CategoryName = c.Category.Name
                     })
                     .ToList();
-        }
+        }        
     }
 }
