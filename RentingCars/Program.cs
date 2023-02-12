@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentingCars.Data;
+using RentingCars.Data.Models;
 using RentingCars.Infrastructure;
 using RentingCars.Services.Cars;
 using RentingCars.Services.Dealers;
@@ -18,7 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
-    .AddDefaultIdentity<IdentityUser>(options => 
+    .AddDefaultIdentity<User>(options => 
     {
         options.SignIn.RequireConfirmedAccount = true;
         options.Password.RequireDigit = false;
@@ -26,6 +27,7 @@ builder.Services
         options.Password.RequireUppercase = false;
         options.Password.RequireNonAlphanumeric = false;
     })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews(config => 
