@@ -4,7 +4,11 @@
     {
         public class User
         {
+            public const int FullNameMinLength = 4;
             public const int FullNameMaxLength = 40;
+
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLength = 100;
         }
 
         public class Car
