@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using RentingCars.Data;
 using RentingCars.Data.Models;
+
+using static RentingCars.WebConstants;
 
 namespace RentingCars.Infrastructure
 {
@@ -8,18 +11,28 @@ namespace RentingCars.Infrastructure
     {
         public static IApplicationBuilder PrepareDatabase(this IApplicationBuilder app)
         {
-            using var scopedServices = app.ApplicationServices.CreateScope();
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var services = serviceScope.ServiceProvider;
 
-            var data = scopedServices.ServiceProvider.GetService<ApplicationDbContext>();
+            MigrateDatabase(services);
 
-            data.Database.Migrate();
-            SeedCategories(data);
-            
+            SeedCategories(services);
+            SeedAdministrator(services);
+
             return app;
         }
 
-        private static void SeedCategories(ApplicationDbContext data)
+        private static void MigrateDatabase(IServiceProvider services)
         {
+            var data = services.GetRequiredService<ApplicationDbContext>();
+
+            data.Database.Migrate();
+        }
+
+        private static void SeedCategories(IServiceProvider services)
+        {
+            var data = services.GetRequiredService<ApplicationDbContext>();
+
             if (data.Categories.Any())
             {
                 return;
@@ -36,7 +49,42 @@ namespace RentingCars.Infrastructure
                 new Category { Name = "Luxury" }
             });
 
-            data.SaveChanges(); 
+            data.SaveChanges();
+        }
+
+        private static void SeedAdministrator(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<User>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            Task
+                .Run(async () =>
+                {
+                    if (await roleManager.RoleExistsAsync(AdministratorRoleName))
+                    {
+                        return;
+                    }
+
+                    var role = new IdentityRole { Name = AdministratorRoleName };
+
+                    await roleManager.CreateAsync(role);
+
+                    const string adminEmail = "admin@adm.bg";
+                    const string adminPassword = "admin123";
+
+                    var user = new User
+                    {
+                        Email = adminEmail,
+                        UserName = adminEmail,
+                        FullName = "Admin"
+                    };
+
+                    await userManager.CreateAsync(user, adminPassword);
+
+                    await userManager.AddToRoleAsync(user, role.Name);
+                })
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }
