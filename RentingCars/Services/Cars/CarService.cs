@@ -1,6 +1,9 @@
-﻿using RentingCars.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using RentingCars.Data;
 using RentingCars.Data.Models;
 using RentingCars.Models;
+using RentingCars.Services.Cars.Models;
 //using static RentingCars.Data.DataConstants;
 
 namespace RentingCars.Services.Cars
@@ -8,10 +11,12 @@ namespace RentingCars.Services.Cars
     public class CarService : ICarService
     {
         private readonly ApplicationDbContext data;
+        private readonly IMapper mapper;
 
-        public CarService(ApplicationDbContext _data)
+        public CarService(ApplicationDbContext _data, IMapper _mapper)
         {
             data = _data;
+            mapper = _mapper;
         }
 
         public CarQueryServiceModel All(
@@ -64,19 +69,7 @@ namespace RentingCars.Services.Cars
             return data
                     .Cars
                     .Where(c => c.Id == id)
-                    .Select(c => new CarDetailsServiceModel
-                    {
-                        Id = c.Id,
-                        Brand = c.Brand,
-                        Model = c.Model,
-                        Description = c.Description,
-                        Year = c.Year,
-                        ImageUrl = c.ImageUrl,
-                        CategoryName = c.Category.Name,
-                        DealerId = c.DealerId,
-                        DealerName = c.Dealer.Name,
-                        UserId = c.Dealer.UserId
-                    })
+                    .ProjectTo<CarDetailsServiceModel>(mapper.ConfigurationProvider)
                     .FirstOrDefault();
         }
 

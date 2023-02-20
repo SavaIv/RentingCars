@@ -1,4 +1,5 @@
 ﻿using RentingCars.Models;
+using RentingCars.Services.Cars.Models;
 
 namespace RentingCars.Services.Cars
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentingCars.Models.Cars;
 using RentingCars.Services.Cars;
@@ -11,11 +12,16 @@ namespace RentingCars.Controllers
     {
         private readonly ICarService cars;
         private readonly IDealerService dealers;
+        private readonly IMapper mapper;
 
-        public CarsController(ICarService _cars, IDealerService _dealers)
+        public CarsController(
+            ICarService _cars, 
+            IDealerService _dealers, 
+            IMapper _mapper)
         {
             cars = _cars;
             dealers = _dealers;
+            mapper = _mapper;
         }
 
         [Authorize]
@@ -109,16 +115,11 @@ namespace RentingCars.Controllers
                 return Unauthorized();
             }
 
-            return View(new CarFormModel
-            {
-                Brand = car.Brand,
-                Model = car.Model,
-                Description = car.Description,
-                ImageUrl = car.ImageUrl,
-                Year = car.Year,
-                CategoryId = car.CategoryId,
-                Categories = cars.AllCategories()
-            });
+            var carForm = mapper.Map<CarFormModel>(car);
+
+            carForm.Categories = cars.AllCategories();
+
+            return View(carForm);
         }
 
         [Authorize]

@@ -2,6 +2,7 @@
 using RentingCars.Models;
 using RentingCars.Models.Api.Cars;
 using RentingCars.Services.Cars;
+using RentingCars.Services.Cars.Models;
 
 namespace RentingCars.Controllers.Api
 {

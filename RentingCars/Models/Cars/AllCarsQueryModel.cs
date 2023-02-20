@@ -1,4 +1,5 @@
 ﻿using RentingCars.Services.Cars;
+using RentingCars.Services.Cars.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace RentingCars.Models.Cars

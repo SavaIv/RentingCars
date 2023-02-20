@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using RentingCars.Data;
 using RentingCars.Models;
 using RentingCars.Models.Cars;
@@ -11,12 +13,16 @@ namespace RentingCars.Controllers
     public class HomeController : Controller
     {
         private readonly IStatisticsService statistics;
+        private readonly IMapper mapper;
         private readonly ApplicationDbContext data;
 
-        public HomeController(IStatisticsService _statistics, ApplicationDbContext _data)
+        public HomeController(IStatisticsService _statistics, 
+            IMapper _mapper,
+            ApplicationDbContext _data)
         {
             statistics = _statistics;
-            data = _data;
+            mapper = _mapper;
+            data = _data;            
         }
 
         public IActionResult Index()
@@ -24,14 +30,7 @@ namespace RentingCars.Controllers
             var cars = data
                 .Cars
                 .OrderByDescending(c => c.Id)
-                .Select(c => new CarIndexViewModel
-                {
-                    Id = c.Id,
-                    Brand = c.Brand,
-                    Model = c.Model,
-                    Year = c.Year,
-                    ImageUrl = c.ImageUrl
-                })
+                .ProjectTo<CarIndexViewModel>(mapper.ConfigurationProvider)                
                 .Take(3)
                 .ToList();
 

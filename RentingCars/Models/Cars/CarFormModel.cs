@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RentingCars.Services.Cars;
+using RentingCars.Services.Cars.Models;
 using System.ComponentModel.DataAnnotations;
 
 using static RentingCars.Data.DataConstants.Car;

@@ -35,6 +35,8 @@ builder.Services.AddControllersWithViews(config =>
     config.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())
     );
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<ICarService, CarService>();
 builder.Services.AddTransient<IDealerService, DealerService>();
