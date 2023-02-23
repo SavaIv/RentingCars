@@ -10,7 +10,7 @@ namespace RentingCars.Infrastructure
     {
         public MappingProfile()
         {
-            CreateMap<Car, CarIndexViewModel>();
+            CreateMap<Car, LatestCarServiceModel>();
             CreateMap<CarDetailsServiceModel, CarFormModel>();
 
             CreateMap<Car, CarDetailsServiceModel>()

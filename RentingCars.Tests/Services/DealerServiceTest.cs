@@ -58,7 +58,7 @@ namespace RentingCars.Tests.Services
             });
             data.SaveChanges();
 
-            var dealerService = new DealerService(TheData());
+            var dealerService = new DealerService(data);
 
             // Act
             var result = dealerService.IsDealer("SomeUserId");
@@ -67,24 +67,25 @@ namespace RentingCars.Tests.Services
             Assert.False(result);
         }
 
-        private static ApplicationDbContext TheData()
-        {
-            const string userId = "TestUserId";
-            const string name = "TestName";
-            const string phoneNumber = "1234567890";
+        
+        //private static ApplicationDbContext TheData()
+        //{
+        //    const string userId = "TestUserId";
+        //    const string name = "TestName";
+        //    const string phoneNumber = "1234567890";
 
-            using var data = DatabaseMock.Instance;
+        //    using var data = DatabaseMock.Instance;
 
-            data.Dealers.Add(new Dealer
-            {
-                UserId = userId,
-                Name = name,
-                PhoneNumber = phoneNumber
-            });
-            data.SaveChanges();
+        //    data.Dealers.Add(new Dealer
+        //    {
+        //        UserId = userId,
+        //        Name = name,
+        //        PhoneNumber = phoneNumber
+        //    });
+        //    data.SaveChanges();
 
-            return data;
-        }
+        //    return data;
+        //}
 
     }
 }

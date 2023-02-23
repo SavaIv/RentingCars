@@ -11,11 +11,15 @@ namespace RentingCars.Tests.Controllers
 {
     public class HomeControllerTest
     {
+        //[Fact]
+
+
+
         [Fact]
         public void ErrorShouldReturnView()
         {
             // Arrange
-            var homeController = new HomeController(null, null, null);
+            var homeController = new HomeController(null, null);
 
             // Act
             var result = homeController.Error();

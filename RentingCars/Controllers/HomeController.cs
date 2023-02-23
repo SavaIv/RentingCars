@@ -5,6 +5,7 @@ using RentingCars.Data;
 using RentingCars.Models;
 using RentingCars.Models.Cars;
 using RentingCars.Models.Home;
+using RentingCars.Services.Cars;
 using RentingCars.Services.Statistics;
 using System.Diagnostics;
 
@@ -12,27 +13,20 @@ namespace RentingCars.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IStatisticsService statistics;
-        private readonly IMapper mapper;
-        private readonly ApplicationDbContext data;
+        private readonly ICarService cars;
+        private readonly IStatisticsService statistics;        
 
-        public HomeController(IStatisticsService _statistics, 
-            IMapper _mapper,
-            ApplicationDbContext _data)
+        public HomeController(
+            ICarService _cars, 
+            IStatisticsService _statistics)
         {
-            statistics = _statistics;
-            mapper = _mapper;
-            data = _data;            
+            cars = _cars;
+            statistics = _statistics;                                    
         }
 
         public IActionResult Index()
         {
-            var cars = data
-                .Cars
-                .OrderByDescending(c => c.Id)
-                .ProjectTo<CarIndexViewModel>(mapper.ConfigurationProvider)                
-                .Take(3)
-                .ToList();
+            var latestCars = cars.Latest().ToList();
 
             var totalStatistics = statistics.Total();
 
@@ -40,7 +34,7 @@ namespace RentingCars.Controllers
             {
                 TotalCars = totalStatistics.TotalCars,
                 TotalUsers = totalStatistics.TotalUsers,
-                Cars = cars
+                Cars = latestCars
             });
         }
 

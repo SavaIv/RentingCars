@@ -64,6 +64,16 @@ namespace RentingCars.Services.Cars
             };
         }
 
+        public IEnumerable<LatestCarServiceModel> Latest()
+        {
+            return data
+                .Cars
+                .OrderByDescending(c => c.Id)
+                .ProjectTo<LatestCarServiceModel>(mapper.ConfigurationProvider)
+                .Take(3)
+                .ToList();
+        }
+
         public CarDetailsServiceModel Details(int id)
         {
             return data
