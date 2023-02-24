@@ -28,7 +28,7 @@ namespace RentingCars.Tests.Controllers
                 Brand = "brand",
                 Description = "description",
                 ImageUrl = "imageUrl",
-                Model = "model"                
+                Model = ""                
             }));
             data.Users.Add(new User());
             data.SaveChanges();
