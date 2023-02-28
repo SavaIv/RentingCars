@@ -36,6 +36,7 @@ builder.Services.AddControllersWithViews(config =>
     );
 
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddMemoryCache();
 
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<ICarService, CarService>();
