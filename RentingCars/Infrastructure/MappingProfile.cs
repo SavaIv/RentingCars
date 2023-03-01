@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using RentingCars.Data.Models;
 using RentingCars.Models.Cars;
-using RentingCars.Models.Home;
+
 using RentingCars.Services.Cars.Models;
 
 namespace RentingCars.Infrastructure

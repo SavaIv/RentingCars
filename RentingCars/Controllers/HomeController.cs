@@ -5,7 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 using RentingCars.Data;
 using RentingCars.Models;
 using RentingCars.Models.Cars;
-using RentingCars.Models.Home;
+
 using RentingCars.Services.Cars;
 using RentingCars.Services.Cars.Models;
 using RentingCars.Services.Statistics;
@@ -15,17 +15,14 @@ namespace RentingCars.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICarService cars;
-        private readonly IStatisticsService statistics;
+        private readonly ICarService cars;        
         private readonly IMemoryCache cache;
 
         public HomeController(
-            ICarService _cars,
-            IStatisticsService _statistics,
+            ICarService _cars,           
             IMemoryCache _cache)
         {
-            cars = _cars;
-            statistics = _statistics;
+            cars = _cars;           
             cache = _cache;
         }
 
@@ -47,14 +44,7 @@ namespace RentingCars.Controllers
                 cache.Set(latestCarsCacheKey, latestCars, cacheOptions);
             }
 
-            var totalStatistics = statistics.Total();
-
-            return View(new IndexViewModel
-            {
-                TotalCars = totalStatistics.TotalCars,
-                TotalUsers = totalStatistics.TotalUsers,
-                Cars = latestCars
-            });
+            return View(latestCars);
         }
 
         public IActionResult Privacy()

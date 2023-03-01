@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Models\Home\" />
   </ItemGroup>
 
 </Project>
