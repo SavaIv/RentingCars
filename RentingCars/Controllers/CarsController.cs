@@ -6,6 +6,8 @@ using RentingCars.Services.Cars;
 using RentingCars.Services.Dealers;
 using static RentingCars.Infrastructure.ClaimsPrincipalExtensions;
 
+using static RentingCars.WebConstants;
+
 namespace RentingCars.Controllers
 {
     public class CarsController : Controller
@@ -76,6 +78,8 @@ namespace RentingCars.Controllers
                 car.CategoryId,
                 car.Year,
                 dealerId);
+
+            TempData[GlobalMessageKey] = "You car was saved successfuly!";
 
             return RedirectToAction(nameof(All));
         }
@@ -158,6 +162,8 @@ namespace RentingCars.Controllers
                 car.ImageUrl,
                 car.CategoryId,
                 car.Year);
+
+            TempData[GlobalMessageKey] = "You car was edited!";
 
             return RedirectToAction(nameof(All));
         }

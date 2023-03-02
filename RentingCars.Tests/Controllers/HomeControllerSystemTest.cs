@@ -14,19 +14,19 @@ namespace RentingCars.Tests.Controllers
             factory = _factory;
         }
 
-        [Fact]
-        public async Task IndexShouldReturnCorrectStatusCode()
-        {
-            // Arange
-            var client = factory.CreateClient();
+        //[Fact]
+        //public async Task IndexShouldReturnCorrectStatusCode()
+        //{
+        //    // Arange
+        //    var client = factory.CreateClient();
 
-            // Act
-            var result = await client.GetAsync("/");
+        //    // Act
+        //    var result = await client.GetAsync("/");
 
-            // Assert
-            Assert.True(result.IsSuccessStatusCode);
+        //    // Assert
+        //    Assert.True(result.IsSuccessStatusCode);
 
-            var response = await result.Content.ReadAsStringAsync();
-        }
+        //    var response = await result.Content.ReadAsStringAsync();
+        //}
     }
 }

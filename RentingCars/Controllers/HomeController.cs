@@ -1,15 +1,7 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using RentingCars.Data;
-using RentingCars.Models;
-using RentingCars.Models.Cars;
-
 using RentingCars.Services.Cars;
 using RentingCars.Services.Cars.Models;
-using RentingCars.Services.Statistics;
-using System.Diagnostics;
 
 namespace RentingCars.Controllers
 {

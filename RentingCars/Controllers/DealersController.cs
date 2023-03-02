@@ -5,6 +5,8 @@ using RentingCars.Data.Models;
 using RentingCars.Infrastructure;
 using RentingCars.Models.Dealers;
 
+using static RentingCars.WebConstants;
+
 namespace RentingCars.Controllers
 {
     public class DealersController : Controller
@@ -51,6 +53,8 @@ namespace RentingCars.Controllers
 
             data.Dealers.Add(dealerData);
             data.SaveChanges();
+
+            TempData[GlobalMessageKey] = "Thank you for becomming a dealer!";
 
             return RedirectToAction("All", "Cars");
         }

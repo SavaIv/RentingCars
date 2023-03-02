@@ -37,6 +37,11 @@ builder.Services.AddControllersWithViews(config =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddMemoryCache();
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromSeconds(10);
+    option.Cookie.HttpOnly = true;
+});
 
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<ICarService, CarService>();
@@ -65,6 +70,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
