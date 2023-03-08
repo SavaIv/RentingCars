@@ -6,6 +6,8 @@
 
         public int CategoryId { get; set; }
 
+        public string CategoryName { get; set; }
+
         public int DealerId { get; set; }
 
         public string DealerName { get; set; }

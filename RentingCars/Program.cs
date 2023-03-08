@@ -77,8 +77,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
+    name: "Car Details",
+    pattern: "Cars/Details/{id}/{information}",
+    defaults: new { controller = "Cars", action = "Details" });
+app.MapControllerRoute(
     name: "Areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();

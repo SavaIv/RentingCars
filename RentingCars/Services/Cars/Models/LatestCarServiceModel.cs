@@ -1,6 +1,6 @@
 ﻿namespace RentingCars.Services.Cars.Models
 {
-    public class LatestCarServiceModel
+    public class LatestCarServiceModel : ICarModel
     {
         public int Id { get; set; }
 

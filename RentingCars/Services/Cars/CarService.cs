@@ -26,7 +26,9 @@ namespace RentingCars.Services.Cars
             int currentPage,
             int carsPerPage)
         {
-            var carsQuery = data.Cars.AsQueryable();
+            var carsQuery = data.Cars
+                .Where(c => c.IsPublic)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(brand))
             {
@@ -68,6 +70,7 @@ namespace RentingCars.Services.Cars
         {
             return data
                 .Cars
+                .Where(c => c.IsPublic)
                 .OrderByDescending(c => c.Id)
                 .ProjectTo<LatestCarServiceModel>(mapper.ConfigurationProvider)
                 .Take(3)
@@ -99,7 +102,8 @@ namespace RentingCars.Services.Cars
                 ImageUrl = imageUrl,
                 CategoryId = categoryId,
                 Year = year,
-                DealerId = dealerId
+                DealerId = dealerId,
+                IsPublic = false
             };
 
             data.Cars.Add(theCar);
@@ -129,7 +133,8 @@ namespace RentingCars.Services.Cars
             carData.Description = description;
             carData.ImageUrl = imageUrl;
             carData.CategoryId = categoryId;
-            carData.Year = year;            
+            carData.Year = year;
+            carData.IsPublic = false;
 
             data.SaveChanges();
 

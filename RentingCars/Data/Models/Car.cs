@@ -26,6 +26,8 @@ namespace RentingCars.Data.Models
         //[Range(CarYearMinValue, CarYearMaxValue)]
         public int Year { get; set; }
 
+        public bool IsPublic { get; set; }
+
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }

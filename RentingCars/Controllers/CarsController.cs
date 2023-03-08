@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
+using RentingCars.Infrastructure;
 using RentingCars.Models.Cars;
 using RentingCars.Services.Cars;
 using RentingCars.Services.Dealers;
@@ -32,6 +34,18 @@ namespace RentingCars.Controllers
             var myCars = cars.ByUser(User.Id());
 
             return View(myCars);
+        }
+
+        public IActionResult Details(int id, string information)
+        {
+            var car = cars.Details(id);
+
+            if(information != car.GetInformation())
+            {
+                return BadRequest();
+            }
+
+            return View(car);
         }
 
         [Authorize]
@@ -71,7 +85,7 @@ namespace RentingCars.Controllers
                 return View(car);
             }
 
-            cars.Create(car.Brand,
+            var carId = cars.Create(car.Brand,
                 car.Model,
                 car.Description,
                 car.ImageUrl,
@@ -81,7 +95,7 @@ namespace RentingCars.Controllers
 
             TempData[GlobalMessageKey] = "You car was saved successfuly!";
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id = carId });
         }
 
         public IActionResult All([FromQuery] AllCarsQueryModel query)
@@ -165,7 +179,7 @@ namespace RentingCars.Controllers
 
             TempData[GlobalMessageKey] = "You car was edited!";
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id });
         }
     }
 }
