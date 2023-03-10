@@ -7,7 +7,7 @@ using static RentingCars.Data.DataConstants.Car;
 
 namespace RentingCars.Models.Cars
 {
-    public class CarFormModel
+    public class CarFormModel : ICarModel
     {
         [Required]        
         [StringLength(

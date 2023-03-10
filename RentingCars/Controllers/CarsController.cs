@@ -93,9 +93,9 @@ namespace RentingCars.Controllers
                 car.Year,
                 dealerId);
 
-            TempData[GlobalMessageKey] = "You car was saved successfuly!";
+            TempData[GlobalMessageKey] = "You car was saved successfuly and waiting for approval!";
 
-            return RedirectToAction(nameof(Details), new { id = carId });
+            return RedirectToAction(nameof(Details), new { id = carId, information = car.GetInformation()});
         }
 
         public IActionResult All([FromQuery] AllCarsQueryModel query)
@@ -177,9 +177,9 @@ namespace RentingCars.Controllers
                 car.CategoryId,
                 car.Year);
 
-            TempData[GlobalMessageKey] = "You car was edited!";
+            TempData[GlobalMessageKey] = "You car was edited and waiting for approval!";
 
-            return RedirectToAction(nameof(Details), new { id });
+            return RedirectToAction(nameof(Details), new { id, information = car.GetInformation() });
         }
     }
 }
