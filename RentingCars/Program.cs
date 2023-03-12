@@ -73,9 +73,12 @@ app.UseAuthorization();
 
 app.UseSession();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapAreaControllerRoute(
+//    name: "MyAdminArea",
+//    areaName: "Admin",
+//    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "Car Details",
     pattern: "Cars/Details/{id}/{information}",
@@ -83,6 +86,18 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "Areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapControllerRoute(
+//    name: "Car Details",
+//    pattern: "Cars/Details/{id}/{information}",
+//    defaults: new { controller = "Cars", action = "Details" });
+
+
+
+
 
 app.MapRazorPages();
 

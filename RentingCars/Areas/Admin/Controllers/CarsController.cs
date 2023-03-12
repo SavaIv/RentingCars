@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RentingCars.Services.Cars;
 
 namespace RentingCars.Areas.Admin.Controllers
 {
     public class CarsController : AdminController
     {
-        public IActionResult Index()
+        private readonly ICarService cars;
+
+        public CarsController(ICarService _cars)
         {
-            return View();
+            cars = _cars;
+        }
+
+        public IActionResult All()
+        {
+            return View(cars.All().Cars);
         }
     }
 }

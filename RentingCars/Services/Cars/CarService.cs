@@ -20,14 +20,15 @@ namespace RentingCars.Services.Cars
         }
 
         public CarQueryServiceModel All(
-            string brand,
-            string searchTerm,
-            CarSorting sorting,
-            int currentPage,
-            int carsPerPage)
+            string brand = null,
+            string searchTerm = null,
+            CarSorting sorting = CarSorting.DateCreated,
+            int currentPage = 1,
+            int carsPerPage = int.MaxValue,
+            bool publicOnly = true)
         {
             var carsQuery = data.Cars
-                .Where(c => c.IsPublic)
+                .Where(c => c.IsPublic == publicOnly)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(brand))

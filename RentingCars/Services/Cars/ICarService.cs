@@ -6,11 +6,12 @@ namespace RentingCars.Services.Cars
     public interface ICarService
     {
         CarQueryServiceModel All(
-            string brand,
-            string searchTerm,
-            CarSorting sorting,
-            int currentPage,
-            int carsPerPage);
+            string brand = null,
+            string searchTerm = null,
+            CarSorting sorting = CarSorting.DateCreated,
+            int currentPage = 1,
+            int carsPerPage = int.MaxValue,
+            bool publicOnly = true);
 
         IEnumerable<LatestCarServiceModel> Latest();
 
