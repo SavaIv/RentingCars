@@ -13,5 +13,7 @@
         public int Year { get; set; }
 
         public string CategoryName { get; set; }
+
+        public bool IsPublic { get; set; }
     }
 }

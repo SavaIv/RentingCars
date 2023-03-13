@@ -175,9 +175,10 @@ namespace RentingCars.Controllers
                 car.Description,
                 car.ImageUrl,
                 car.CategoryId,
-                car.Year);
+                car.Year,
+                User.IsAdmin());
 
-            TempData[GlobalMessageKey] = "You car was edited and waiting for approval!";
+            TempData[GlobalMessageKey] = $"The car was edited {(User.IsAdmin() ? string.Empty : " and waiting for approval")}! ";
 
             return RedirectToAction(nameof(Details), new { id, information = car.GetInformation() });
         }

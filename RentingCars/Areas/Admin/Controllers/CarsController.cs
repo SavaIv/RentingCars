@@ -14,7 +14,14 @@ namespace RentingCars.Areas.Admin.Controllers
 
         public IActionResult All()
         {
-            return View(cars.All().Cars);
+            return View(cars.All(publicOnly: false).Cars);
+        }
+
+        public IActionResult ChangeVisibility(int id)
+        {
+            cars.ChangeVisibility(id);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

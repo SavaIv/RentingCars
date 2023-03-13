@@ -120,7 +120,8 @@ namespace RentingCars.Services.Cars
             string description,
             string imageUrl,
             int categoryId,
-            int year)
+            int year,
+            bool isPublic)
         {
             var carData = data.Cars.Find(id);
                         
@@ -135,7 +136,7 @@ namespace RentingCars.Services.Cars
             carData.ImageUrl = imageUrl;
             carData.CategoryId = categoryId;
             carData.Year = year;
-            carData.IsPublic = false;
+            carData.IsPublic = isPublic;
 
             data.SaveChanges();
 
@@ -154,6 +155,15 @@ namespace RentingCars.Services.Cars
             return data
                 .Cars
                 .Any(c => c.Id == carId && c.DealerId == dealerId);
+        }
+
+        public void ChangeVisibility(int carId)
+        {
+            var car = data.Cars.Find(carId);
+
+            car.IsPublic = !car.IsPublic;
+
+            data.SaveChanges();
         }
 
         public IEnumerable<string> AllBrands()
@@ -198,6 +208,6 @@ namespace RentingCars.Services.Cars
                         CategoryName = c.Category.Name
                     })
                     .ToList();
-        }        
+        }
     }
 }

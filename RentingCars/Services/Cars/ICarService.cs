@@ -33,11 +33,14 @@ namespace RentingCars.Services.Cars
             string description,
             string imageUrl,
             int categoryId,
-            int year);
+            int year,
+            bool isPublic);
 
         IEnumerable<CarServiceModel> ByUser(string userId);
 
         bool IsByDealer(int carId, int dealerId);
+
+        void ChangeVisibility(int carId);
 
         IEnumerable<string> AllBrands();
 
