@@ -10,8 +10,13 @@ namespace RentingCars.Infrastructure
     {
         public MappingProfile()
         {
-            CreateMap<Car, LatestCarServiceModel>();
+            CreateMap<Category, CarCategoryServiceModel>();
+
+            CreateMap<Car, LatestCarServiceModel>();            
             CreateMap<CarDetailsServiceModel, CarFormModel>();
+
+            CreateMap<Car, CarServiceModel>()
+                .ForMember(c => c.CategoryName, cfg => cfg.MapFrom(c => c.Category.Name));
 
             CreateMap<Car, CarDetailsServiceModel>()
                 .ForMember(c => c.UserId, cfg => cfg.MapFrom(c => c.Dealer.UserId))

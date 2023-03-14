@@ -28,7 +28,7 @@ namespace RentingCars.Services.Cars
             bool publicOnly = true)
         {
             var carsQuery = data.Cars
-                .Where(c => c.IsPublic == publicOnly)
+                .Where(c => publicOnly ? c.IsPublic : true)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(brand))
@@ -180,11 +180,7 @@ namespace RentingCars.Services.Cars
         {
             return data
                     .Categories
-                    .Select(c => new CarCategoryServiceModel
-                    {
-                        Id = c.Id,
-                        Name = c.Name
-                    })
+                    .ProjectTo<CarCategoryServiceModel>(mapper.ConfigurationProvider)
                     .ToList();
         }
 
@@ -195,18 +191,10 @@ namespace RentingCars.Services.Cars
                 .Any(c => c.Id == categoryId);
         }
 
-        private static IEnumerable<CarServiceModel> GetCars(IQueryable<Car> carQuery)
+        private IEnumerable<CarServiceModel> GetCars(IQueryable<Car> carQuery)
         {
             return carQuery
-                    .Select(c => new CarServiceModel
-                    {
-                        Id = c.Id,
-                        Brand = c.Brand,
-                        Model = c.Model,
-                        Year = c.Year,
-                        ImageUrl = c.ImageUrl,
-                        CategoryName = c.Category.Name
-                    })
+                    .ProjectTo<CarServiceModel>(mapper.ConfigurationProvider)
                     .ToList();
         }
     }
