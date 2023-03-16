@@ -168,7 +168,7 @@ namespace RentingCars.Controllers
                 return BadRequest();
             }
 
-            cars.Edit(
+            var edited = cars.Edit(
                 id,
                 car.Brand,
                 car.Model,
@@ -177,6 +177,11 @@ namespace RentingCars.Controllers
                 car.CategoryId,
                 car.Year,
                 User.IsAdmin());
+
+            if (!edited)
+            {
+                return BadRequest();
+            }
 
             TempData[GlobalMessageKey] = $"The car was edited {(User.IsAdmin() ? string.Empty : " and waiting for approval")}! ";
 

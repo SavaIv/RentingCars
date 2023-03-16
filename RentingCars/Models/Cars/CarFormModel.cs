@@ -23,6 +23,8 @@ namespace RentingCars.Models.Cars
             ErrorMessage = "The Model must be between 2 and 30 charcters")]
         public string Model { get; set; }
 
+        public bool SomeBool { get; set; }
+
         [Required]        
         [StringLength(
             CarDescriptionMaxLength, 
