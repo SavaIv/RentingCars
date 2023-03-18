@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Moq;
+using MyTested.AspNetCore.Mvc;
 using RentingCars.Controllers;
 using RentingCars.Data.Models;
 using RentingCars.Services.Cars;
@@ -32,13 +33,13 @@ namespace RentingCars.Tests.Controllers
         //        Brand = "brand",
         //        Description = "description",
         //        ImageUrl = "imageUrl",
-        //        Model = ""                
+        //        Model = ""
         //    }));
         //    data.Users.Add(new User());
         //    data.SaveChanges();
 
-        //    var carService = new CarService(data, mapper);           
-            
+        //    var carService = new CarService(data, mapper);
+
         //    var homeController = new HomeController(carService, null);
 
         //    // Act
@@ -57,6 +58,70 @@ namespace RentingCars.Tests.Controllers
         //    //Assert.Equal(1, indexViewModel.TotalUsers);
         //}
 
+        //// Ivo Kenov MyTested.AspNetCore.Mvc - cant setup it to work
+        //[Fact]
+        //public void IndexShouldReturnViewWithCorrectModelAndData1()
+        //{
+        //    // unit test on the controller
+
+        //    // Arrange
+        //    MyController<HomeController>
+        //        .Instance(controller => controller                   
+        //            .WithData(GetCars()))
+        //    //Act
+        //        .Calling(c => c.Index())
+        //    // Assert
+        //        .ShouldReturn()
+        //        .View(view => view
+        //            .WithModelOfType<IndexViewModel>()
+        //            .Passing(m => m.Cars.Should().HaveCount(3)));
+
+        //}
+
+        ////Ivo Kenov MyTested.AspNetCore.Mvc - cant setup it to work
+        //[Fact]
+        //public void IndexShouldReturnViewWithCorrectModelAndData2()
+        //{
+        //    // full pipeline test - from route to the end
+
+        //    MyMvc
+        //        .Pipeline()
+        //        .ShouldMap("/")
+        //        .To<HomeController>(c => c.Index())
+        //        .Which(controller => controller
+        //            .WithData(GetCars()))
+        //        .ShouldReturn()
+        //        .View(view => view
+        //            .WithModelOfType<IndexViewModel>()
+        //            .Passing(m => m.Cars.Should().HaveCount(3)));
+        //}
+
+        ////Ivo Kenov MyTested.AspNetCore.Mvc - cant setup it to work
+        //[Fact]
+        //public void IndexShouldReturnViewWithCorrectModelAndData2()
+        //{
+        //    // full pipeline test - from route to the end
+
+        //    MyMvc
+        //        .Pipeline()
+        //        .ShouldMap("/")
+        //        .To<HomeController>(c => c.Index())
+        //        .Which(controller => controller
+        //            .WithData(GetCars()))
+        //        .ShouldReturn()
+        //        .View(view => view
+        //            .WithModelOfType<List<LatestCarServiceModel>>());
+        //            //.Passing(m => m.Should().HaveCount(3)));
+        //}
+
+        [Fact]
+        public void BlaBla()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/")
+                .To<HomeController>(c => c.Index());
+        }
 
         [Fact]
         public void ErrorShouldReturnView()
@@ -70,6 +135,11 @@ namespace RentingCars.Tests.Controllers
             //Assert
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
+        }
+
+        private static IEnumerable<Car> GetCars()
+        {
+            return Enumerable.Range(0, 5).Select(i => new Car());
         }
     }
 }
