@@ -1,0 +1,18 @@
+﻿@model CarDetailsServiceModel
+
+@{
+    ViewBag.Title = "Delete Car";
+}
+
+<div class="row">   
+    <div class="col-md-4">
+        <div class="card mb-3" @*style="width: 18rem;"*@>
+            <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Brand @Model.Model - @Model.Year (@Model.CategoryId)">
+            <div class="card-body text-center">
+                <h5 class="card-title text-center">@Model.Brand @Model.Model (@Model.Year)</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a asp-controller="Cars" asp-action="ConfirmDelete" asp-route-id="@Model.Id" asp-route-information="@Model.GetInformation()" class="btn btn-danger">Confirm Deleting</a>                                        
+            </div>
+        </div>
+    </div>    
+</div>

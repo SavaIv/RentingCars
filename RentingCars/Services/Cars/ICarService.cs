@@ -15,6 +15,8 @@ namespace RentingCars.Services.Cars
 
         IEnumerable<LatestCarServiceModel> Latest();
 
+        bool Delete(int carId);
+
         CarDetailsServiceModel Details(int carId);
 
         int Create(

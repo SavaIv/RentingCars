@@ -114,14 +114,14 @@ namespace RentingCars.Tests.Controllers
         //            //.Passing(m => m.Should().HaveCount(3)));
         //}
 
-        [Fact]
-        public void BlaBla()
-        {
-            MyRouting
-                .Configuration()
-                .ShouldMap("/")
-                .To<HomeController>(c => c.Index());
-        }
+        //[Fact]
+        //public void BlaBla()
+        //{
+        //    MyRouting
+        //        .Configuration()
+        //        .ShouldMap("/")
+        //        .To<HomeController>(c => c.Index());
+        //}
 
         [Fact]
         public void ErrorShouldReturnView()

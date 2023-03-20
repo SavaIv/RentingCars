@@ -28,6 +28,7 @@ namespace RentingCars.Services.Cars
             bool publicOnly = true)
         {
             var carsQuery = data.Cars
+                .Where(c => c.IsDeleted == false)
                 .Where(c => publicOnly ? c.IsPublic : true)
                 .AsQueryable();
 
@@ -78,6 +79,22 @@ namespace RentingCars.Services.Cars
                 .ToList();
         }
 
+        public bool Delete(int carId)
+        {
+            var carData = data.Cars.FirstOrDefault(c => c.Id == carId);
+
+            if (carData == null)
+            {
+                return false;
+            }
+
+            //data.Cars.Remove(carData);
+            carData.IsDeleted = true;
+            data.SaveChanges();
+
+            return true;
+        }
+
         public CarDetailsServiceModel Details(int id)
         {
             return data
@@ -124,8 +141,8 @@ namespace RentingCars.Services.Cars
             bool isPublic)
         {
             var carData = data.Cars.Find(id);
-                        
-            if(carData == null)
+
+            if (carData == null)
             {
                 return false;
             }
@@ -197,5 +214,6 @@ namespace RentingCars.Services.Cars
                     .ProjectTo<CarServiceModel>(mapper.ConfigurationProvider)
                     .ToList();
         }
+
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.VisualBasic;
 using RentingCars.Infrastructure;
 using RentingCars.Models.Cars;
 using RentingCars.Services.Cars;
+using RentingCars.Services.Cars.Models;
 using RentingCars.Services.Dealers;
 using static RentingCars.Infrastructure.ClaimsPrincipalExtensions;
 
@@ -19,8 +20,8 @@ namespace RentingCars.Controllers
         private readonly IMapper mapper;
 
         public CarsController(
-            ICarService _cars, 
-            IDealerService _dealers, 
+            ICarService _cars,
+            IDealerService _dealers,
             IMapper _mapper)
         {
             cars = _cars;
@@ -40,7 +41,7 @@ namespace RentingCars.Controllers
         {
             var car = cars.Details(id);
 
-            if(information != car.GetInformation())
+            if (information != car.GetInformation())
             {
                 return BadRequest();
             }
@@ -95,7 +96,7 @@ namespace RentingCars.Controllers
 
             TempData[GlobalMessageKey] = "You car was saved successfuly and waiting for approval!";
 
-            return RedirectToAction(nameof(Details), new { id = carId, information = car.GetInformation()});
+            return RedirectToAction(nameof(Details), new { id = carId, information = car.GetInformation() });
         }
 
         public IActionResult All([FromQuery] AllCarsQueryModel query)
@@ -114,6 +115,56 @@ namespace RentingCars.Controllers
             query.Cars = queryResult.Cars;
 
             return View(query);
+        }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var userId = User.Id();
+
+            if (!dealers.IsDealer(userId) && !User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
+            var car = cars.Details(id);
+
+            if (car.UserId != userId && !User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
+            return View(car);
+        }
+
+        [Authorize]
+        public IActionResult ConfirmDelete(int id)
+        {
+            var car = cars.Details(id);
+
+            var dealerIdByLoggedUser = dealers.IdbyUser(User.Id());
+            var dealerIdByCarInfo = car.DealerId;
+
+            if (dealerIdByLoggedUser == 0 && !User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
+            if (dealerIdByLoggedUser != dealerIdByCarInfo)
+            {
+                return Unauthorized();
+            }
+
+            var deleteResult = cars.Delete(car.Id);
+
+            if (!deleteResult)
+            {
+                return BadRequest();
+            }
+
+            TempData[GlobalMessageKey] = $"The car {car.Brand}, {car.Model} - {car.Year} was deleted! ";
+
+            return RedirectToAction(nameof(Mine));
         }
 
         [Authorize]
