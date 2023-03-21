@@ -38,6 +38,11 @@ namespace RentingCars.Models.Cars
         public string ImageUrl { get; set; }
 
         [Required]
+        [Range(CarPriceMin, CarPriceMax)]
+        [Display(Name = "Rent price per day")]
+        public decimal Price {get ; set; }
+
+        [Required]
         [Range (CarYearMinValue, CarYearMaxValue)]
         public int Year { get; set; }
 

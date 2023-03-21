@@ -5,7 +5,7 @@ using RentingCars.Data.Models;
 namespace RentingCars.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
-    {       
+    {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -28,6 +28,10 @@ namespace RentingCars.Data
 
             builder
                 .Entity<Car>()
+                .Property(c => c.Price).HasPrecision(4, 2);
+            
+            builder
+                .Entity<Car>()
                 .HasOne(c => c.Dealer)
                 .WithMany(d => d.Cars)
                 .HasForeignKey(c => c.DealerId)
@@ -36,11 +40,11 @@ namespace RentingCars.Data
 
             builder
                 .Entity<Dealer>()
-                .HasOne(d => d.User)                
+                .HasOne(d => d.User)
                 //.HasOne<IdentityUser>()
                 .WithOne()
                 .HasForeignKey<Dealer>(d => d.UserId)
-                .OnDelete(DeleteBehavior.Restrict);                
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

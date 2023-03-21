@@ -110,7 +110,8 @@ namespace RentingCars.Services.Cars
                             string imageUrl,
                             int categoryId,
                             int year,
-                            int dealerId)
+                            int dealerId,
+                            decimal price)
         {
             var theCar = new Car
             {
@@ -121,6 +122,7 @@ namespace RentingCars.Services.Cars
                 CategoryId = categoryId,
                 Year = year,
                 DealerId = dealerId,
+                Price = price,
                 IsPublic = false
             };
 

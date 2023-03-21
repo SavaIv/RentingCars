@@ -13,6 +13,9 @@
 
         public class Car
         {
+            public const double CarPriceMin = 100.00;
+            public const double CarPriceMax = 2000.00;
+
             public const int CarBrandMinLength = 2;
             public const int CarBrandMaxLength = 20;
 

@@ -10,6 +10,7 @@
                     <h5 class="card-title text-center">@car.Brand @car.Model (@car.Year)</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     <a asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id" asp-route-information="@car.GetInformation()" class="btn btn-primary">View</a>
+                    <a asp-controller="Cars" asp-action="Price" asp-route-id="@car.Id" asp-route-information="@car.GetInformation()" class="btn btn-primary">Check Price</a>
                     @if(ViewBag.AllowCarEdit == true || User.IsInRole(WebConstants.AdministratorRoleName))
                     {
                         <a asp-controller="Cars" asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning">Edit</a>

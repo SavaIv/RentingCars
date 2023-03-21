@@ -37,5 +37,8 @@ namespace RentingCars.Data.Models
         public int DealerId { get; set; }
 
         public Dealer Dealer { get; set; }
+
+        //[Range(CarPriceMin, CarPriceMax)]
+        public decimal Price { get; set; }
     }
 }

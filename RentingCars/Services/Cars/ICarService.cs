@@ -26,7 +26,8 @@ namespace RentingCars.Services.Cars
             string imageUrl, 
             int categoryId, 
             int year, 
-            int dealerId);
+            int dealerId,
+            decimal Price);
 
         bool Edit(
             int carId,

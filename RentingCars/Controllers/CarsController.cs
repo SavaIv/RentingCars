@@ -87,12 +87,13 @@ namespace RentingCars.Controllers
             }
 
             var carId = cars.Create(car.Brand,
-                car.Model,
-                car.Description,
-                car.ImageUrl,
-                car.CategoryId,
-                car.Year,
-                dealerId);
+                                    car.Model,
+                                    car.Description,
+                                    car.ImageUrl,
+                                    car.CategoryId,
+                                    car.Year,
+                                    dealerId,
+                                    car.Price);
 
             TempData[GlobalMessageKey] = "You car was saved successfuly and waiting for approval!";
 
@@ -237,6 +238,18 @@ namespace RentingCars.Controllers
             TempData[GlobalMessageKey] = $"The car was edited {(User.IsAdmin() ? string.Empty : " and waiting for approval")}! ";
 
             return RedirectToAction(nameof(Details), new { id, information = car.GetInformation() });
+        }
+
+        public IActionResult Price(int id, string information)
+        {
+            var car = cars.Details(id);
+
+            if (information != car.GetInformation())
+            {
+                return BadRequest();
+            }
+
+            return View(car);
         }
     }
 }
